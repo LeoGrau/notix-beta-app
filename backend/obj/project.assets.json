@@ -1251,19 +1251,19 @@
     ]
   },
   "packageFolders": {
-    "/home/devmynuts/.nuget/packages/": {}
+    "C:\\Users\\leona\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/devmynuts/Documents/Github/Notix/notix-beta-app/backend/Notix.Beta.API.csproj",
+      "projectUniqueName": "D:\\Github\\notix-beta-app\\backend\\Notix.Beta.API.csproj",
       "projectName": "Notix.Beta.API",
-      "projectPath": "/home/devmynuts/Documents/Github/Notix/notix-beta-app/backend/Notix.Beta.API.csproj",
-      "packagesPath": "/home/devmynuts/.nuget/packages/",
-      "outputPath": "/home/devmynuts/Documents/Github/Notix/notix-beta-app/backend/obj/",
+      "projectPath": "D:\\Github\\notix-beta-app\\backend\\Notix.Beta.API.csproj",
+      "packagesPath": "C:\\Users\\leona\\.nuget\\packages\\",
+      "outputPath": "D:\\Github\\notix-beta-app\\backend\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/devmynuts/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\leona\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -1336,7 +1336,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/bin/dotnet-8.0.402/sdk/8.0.402/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.405/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
