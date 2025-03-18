@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../build/Notix.Beta.API.props" />
+</Project>
