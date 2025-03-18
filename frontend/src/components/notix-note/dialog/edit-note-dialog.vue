@@ -32,7 +32,7 @@
             class="w-full"
             fluid
           >
-            <template #footer v-if="field.fieldLabel">
+            <template #footer v-if="field.fieldLabel == 'Categories'">
               <div class="p-3 flex justify-between">
                 <pv-button
                   label="Add New"

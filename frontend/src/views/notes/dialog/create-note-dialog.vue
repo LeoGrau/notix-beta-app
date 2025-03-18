@@ -21,10 +21,32 @@
           <component
             v-model="formValues[field.bind.name as keyof typeof formValues]"
             v-bind="field.bind"
+            v-on="field.on"
             :is="field.fieldType"
             class="w-full"
             fluid
-          ></component>
+          >
+            <template #footer v-if="field.fieldLabel == 'Categories'">
+              <div class="p-3 flex justify-between">
+                <pv-button
+                  label="Add New"
+                  severity="secondary"
+                  text
+                  size="small"
+                  icon="pi pi-plus"
+                  @click="openConfirmAddCategory()"
+                />
+                <pv-button
+                  label="Remove All"
+                  severity="danger"
+                  text
+                  size="small"
+                  icon="pi pi-times"
+                  @click="formValues.noteCategories = []"
+                />
+              </div>
+            </template>
+          </component>
           <label>{{ field.fieldLabel }}</label>
         </pv-float-label>
       </div>
@@ -40,6 +62,8 @@
 import type { DynamicDialogInstance } from 'primevue/dynamicdialogoptions'
 import { inject, computed, onMounted, ref, type Ref } from 'vue'
 import categoryService from '@/services/api/category.service'
+import { useConfirm, useToast } from 'primevue'
+import type CreateCategoryModel from '@/types/models/category/create.category.model'
 
 const dialogRef = inject<Ref<DynamicDialogInstance>>('dialogRef')
 
@@ -47,12 +71,51 @@ const categories = ref([])
 
 console.log(categories)
 
+const confirm = useConfirm()
+const toast = useToast()
+const categoryFilter = ref('')
+
 const formValues = ref({
   title: '',
   content: '',
   noteCategories: [],
   isArchived: false,
 })
+
+function openConfirmAddCategory() {
+  confirm.require({
+    async accept() {
+      const newCategory: CreateCategoryModel = {
+        name: categoryFilter.value,
+      }
+      await categoryService.createCategory(newCategory)
+      const res = await categoryService.getAllCategories()
+      toast.add({
+        severity: 'success',
+        summary: 'Successful',
+        detail: 'Successfully added.',
+        life: 2000,
+      })
+      categories.value = res.data
+    },
+    reject() {
+      categoryFilter.value = ''
+    },
+    header: 'Confirm Addition',
+    icon: 'pi pi-trash',
+    message: `You want to add a new category called '${categoryFilter.value}'? 🤔`,
+    acceptLabel: 'Confirm',
+    rejectLabel: 'Cancel',
+    acceptIcon: 'pi pi-check',
+    rejectIcon: 'pi pi-times',
+    acceptProps: {
+      severity: 'success',
+    },
+    rejectProps: {
+      severity: 'danger',
+    },
+  })
+}
 
 const fieldSets = computed(() => [
   {
@@ -62,11 +125,13 @@ const fieldSets = computed(() => [
         fieldType: 'pv-input-text',
         fieldLabel: 'Title',
         bind: { name: 'title' },
+        on: {},
       },
       {
         fieldType: 'pv-text-area',
         fieldLabel: 'Content',
         bind: { name: 'content' },
+        on: {},
       },
     ],
   },
@@ -82,6 +147,11 @@ const fieldSets = computed(() => [
           optionLabel: 'name',
           filter: true,
           display: 'chip',
+        },
+        on: {
+          filter: (event: any) => {
+            categoryFilter.value = event.value
+          },
         },
       },
     ],

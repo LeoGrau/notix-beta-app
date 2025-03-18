@@ -79,15 +79,13 @@ using (var context = scope.ServiceProvider.GetRequiredService<AppDbContext>())
 }
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+// Allow Swagger for testing purposes.
+app.UseSwagger();
+app.UseSwaggerUI(options =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(options =>
-    {
-        options.SwaggerEndpoint("v1/swagger.json", "v1");
-        options.RoutePrefix = "swagger";
-    });
-}
+    options.SwaggerEndpoint("v1/swagger.json", "v1");
+    options.RoutePrefix = "swagger";
+});
 
 app.UseCors(policyBuilder => policyBuilder
     .AllowAnyOrigin()

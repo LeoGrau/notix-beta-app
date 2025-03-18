@@ -1,20 +1,11 @@
 #!/bin/bash
-trap 'echo "Terminando script..." && kill 0' EXIT
-echo "Inicializando la aplicacion"
 
-# Iniciar Backend (.NET 8.0)
-cd backend
+echo "🚀 Stopping existing containers..."
+docker compose --env-file .env.default down
 
-dotnet restore
-dotnet build
-dotnet run &
-cd ..
+echo "🔄 Building and starting containers with Docker🐋"
+docker compose --env-file .env.default up --build -d
 
-# Iniciar Frontend (Vue.js)
-cd frontend
-
-npm install
-npm run dev &
-cd ..
- 
-wait
+echo "✅ Application is running! Access it at:"
+echo "🌍 Frontend: http://localhost:8080"
+echo "🔧 Backend API: http://localhost:8080/swagger"
