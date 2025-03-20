@@ -34,7 +34,7 @@
               <pv-button icon="pi pi-refresh" label="Reset" @click="getActiveNotes()"></pv-button>
             </div>
           </div>
-          <div class="grid grid-cols-3 gap-3">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3">
             <notix-note
               @updated-note="setAll()"
               :note="note"
@@ -60,7 +60,7 @@
               <pv-button icon="pi pi-refresh" label="Reset" @click="getArchivedNotes()"></pv-button>
             </div>
           </div>
-          <div class="grid grid-cols-3 gap-3">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3">
             <notix-note
               @updated-note="setAll()"
               :note="note"

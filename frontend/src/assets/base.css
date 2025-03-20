@@ -10,3 +10,11 @@
 .tektur-font {
   font-family: 'Tektur', sans-serif;
 }
+
+
+html, #app, body {
+  height: 100%;
+  min-width: 400px;
+}
+
+

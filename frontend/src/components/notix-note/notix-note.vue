@@ -1,6 +1,6 @@
 <template>
   <div
-    class="p-4 border rounded-md border-surface-400 flex flex-col justify-between min-h-[150px] bg-surface-100"
+    class="p-4 border rounded-md border-surface-400 flex flex-col justify-between min-h-[150px] bg-surface-100 dark:bg-surface-950 dark:border-surface-700"
   >
     <div class="flex justify-between">
       <h1 class="text-xl">{{ props.note.title }}</h1>

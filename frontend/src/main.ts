@@ -119,7 +119,7 @@ app.use(PrimeVue, {
 })
 
 const root = document.getElementsByTagName('html')[0]
-// root.classList.toggle('p-dark')
+root.classList.toggle('p-dark')
 app.use(ConfirmationService)
 app.use(DialogService)
 app.use(ToastService)
