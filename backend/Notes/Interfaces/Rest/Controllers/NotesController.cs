@@ -1,5 +1,7 @@
 using System.Net.Mime;
+using System.Security.Claims;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Notix.Beta.API.Notes.Domain.Models;
 using Notix.Beta.API.Notes.Domain.Repositories;
@@ -34,13 +36,23 @@ public class NotesController : ControllerBase
         return _mapper.Map<IEnumerable<BasicNoteResource>>(await _noteService.ListAllAsync());
     }
 
+    [Authorize]
+    [HttpGet("list/{userId:int}")]
+    public async Task<IEnumerable<BasicNoteResource>> ListNotesByUserIdAsync(int userId)
+    {
+        var claimUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if(string.IsNullOrEmpty(claimUserId) || claimUserId != userId.ToString())
+            throw new UnauthorizedAccessException("You are not authorized to access this resource.");
+        Console.WriteLine($"claimUserId: {claimUserId}");
+        return _mapper.Map<IEnumerable<BasicNoteResource>>(await _noteService.ListByUserIdAsync(userId));
+    }
+
     [HttpGet("status")]
     public async Task<IEnumerable<BasicNoteResource>> ListNotesByIsActiveStatusAsync(
         [FromQuery(Name = "is_archive")] bool isArchive)
     {
         return _mapper.Map<IEnumerable<BasicNoteResource>>(await _noteService.ListByIsArchivedStatusAsync(isArchive));
     }
-
 
     [HttpGet("{id:int}")]
     public async Task<IActionResult> FindNoteAsync([FromRoute] int id)
@@ -50,13 +62,13 @@ public class NotesController : ControllerBase
             return BadRequest(result.Message);
         return Ok(_mapper.Map<DetailedNoteResource>(result.Resource));
     }
-    
+
     [HttpPost]
     public async Task<IActionResult> CreateNoteAsync([FromBody] CreateNoteResource resource)
     {
         var mappedResource = _mapper.Map<CreateNoteResource, Note>(resource);
         var result = await _noteService.CreateAsync(mappedResource);
-        if(!result.Success)
+        if (!result.Success)
             return BadRequest(result.Message);
         return Ok(_mapper.Map<DetailedNoteResource>(result.Resource));
     }
@@ -66,16 +78,16 @@ public class NotesController : ControllerBase
     {
         var mappedResource = _mapper.Map<UpdateNoteResource, Note>(resource);
         var result = await _noteService.UpdateAsync(id, mappedResource);
-        if(!result.Success)
+        if (!result.Success)
             return BadRequest(result.Message);
         return Ok(_mapper.Map<DetailedNoteResource>(result.Resource));
     }
-    
+
     [HttpPatch("archive/{id:int}")]
     public async Task<IActionResult> SetIsArchiveStatusAsync([FromRoute] int id, [FromBody] bool isArchive)
     {
         var result = await _noteService.SetIsArchiveStatusAsync(id, isArchive);
-        if(!result.Success)
+        if (!result.Success)
             return BadRequest(result.Message);
         return Ok(_mapper.Map<DetailedNoteResource>(result.Resource));
     }
@@ -84,14 +96,16 @@ public class NotesController : ControllerBase
     public async Task<IActionResult> DeleteNoteAsync([FromRoute] int id)
     {
         var result = await _noteService.DeleteAsync(id);
-        if(!result.Success)
+        if (!result.Success)
             return BadRequest(result.Message);
         return Ok(_mapper.Map<DetailedNoteResource>(result.Resource));
     }
 
     [HttpGet("category/{categoryId:int}")]
-    public async Task<IEnumerable<BasicNoteResource>> ListByCategoryIdAsync([FromRoute] int categoryId, [FromQuery(Name = "is_archived")] bool isArchived)
+    public async Task<IEnumerable<BasicNoteResource>> ListByCategoryIdAsync([FromRoute] int categoryId,
+        [FromQuery(Name = "is_archived")] bool isArchived)
     {
-        return _mapper.Map<IEnumerable<BasicNoteResource>>(await _noteService.ListByCategoryAndIsArchivedAsync(categoryId, isArchived));
+        return _mapper.Map<IEnumerable<BasicNoteResource>>(
+            await _noteService.ListByCategoryAndIsArchivedAsync(categoryId, isArchived));
     }
 }

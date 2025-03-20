@@ -1,4 +1,6 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Identity.Data;
+using Notix.Beta.API.Auth.Domain.Models;
 using Notix.Beta.API.Notes.Domain.Models;
 using Notix.Beta.API.Notes.Domain.Models.Intermediate;
 using Notix.Beta.API.Notes.Resources.Create;
@@ -28,5 +30,8 @@ public class ResourceToModelProfile : Profile
         
         // Category
         CreateMap<CreateCategoryResource, Category>();
+        
+        // Auth
+        CreateMap<RegisterRequest, User>();
     }
 }

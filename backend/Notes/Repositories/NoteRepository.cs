@@ -17,6 +17,11 @@ public class NoteRepository : BaseRepository<Note, int>, INoteRepository
         return await DbSet.ToListAsync();
     }
 
+    public async Task<IEnumerable<Note>> ListByUserIdAsync(int userId)
+    {
+        return await DbSet.Where(x => x.UserId == userId).ToListAsync();
+    }
+
     public async Task<IEnumerable<Note>> ListByIsArchivedStatusAsync(bool isArchived)
     {
         return await DbSet

@@ -1,3 +1,4 @@
+using Notix.Beta.API.Auth.Domain.Models;
 using Notix.Beta.API.Notes.Domain.Models;
 using Notix.Beta.API.Notes.Domain.Repositories;
 using Notix.Beta.API.Notes.Domain.Services;
@@ -148,5 +149,10 @@ public class NoteService : INoteService
             await _unitOfWork.RollbackTransactionAsync();
             return new NoteResponse(e.Message);
         }
+    }
+
+    public async Task<IEnumerable<Note>> ListByUserIdAsync(int userId)
+    {
+        return await _noteRepository.ListByUserIdAsync(userId);
     }
 }

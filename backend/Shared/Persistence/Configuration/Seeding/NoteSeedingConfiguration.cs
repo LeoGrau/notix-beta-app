@@ -16,6 +16,7 @@ public class NoteSeedingConfiguration : IEntityTypeConfiguration<Note>
             IsArchived = false,
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow,
+            UserId = 1,
         }, new Note
         {
             Id = 2,
@@ -23,7 +24,8 @@ public class NoteSeedingConfiguration : IEntityTypeConfiguration<Note>
             Content = "This is the content of the second note.",
             IsArchived = true,
             CreatedAt = DateTime.UtcNow,
-            UpdatedAt = DateTime.UtcNow
+            UpdatedAt = DateTime.UtcNow,
+            UserId = 1,
         }, new Note
         {
             Id = 3,
@@ -31,7 +33,8 @@ public class NoteSeedingConfiguration : IEntityTypeConfiguration<Note>
             Content = "This is the content of the third note.",
             IsArchived = false,
             CreatedAt = DateTime.UtcNow,
-            UpdatedAt = DateTime.UtcNow
+            UpdatedAt = DateTime.UtcNow,
+            UserId = 1,
         }, new Note
         {
             Id = 4,
@@ -39,7 +42,8 @@ public class NoteSeedingConfiguration : IEntityTypeConfiguration<Note>
             Content = "This is the content of the fourth note.",
             IsArchived = true,
             CreatedAt = DateTime.UtcNow,
-            UpdatedAt = DateTime.UtcNow
+            UpdatedAt = DateTime.UtcNow,
+            UserId = 1,
         }, new Note
         {
             Id = 5,
@@ -47,7 +51,8 @@ public class NoteSeedingConfiguration : IEntityTypeConfiguration<Note>
             Content = "This is the content of the fifth note.",
             IsArchived = false,
             CreatedAt = DateTime.UtcNow,
-            UpdatedAt = DateTime.UtcNow
+            UpdatedAt = DateTime.UtcNow,
+            UserId = 2,
         }, new Note
         {
             Id = 6,
@@ -55,7 +60,8 @@ public class NoteSeedingConfiguration : IEntityTypeConfiguration<Note>
             Content = "This is the content of the sixth note.",
             IsArchived = true,
             CreatedAt = DateTime.UtcNow,
-            UpdatedAt = DateTime.UtcNow
+            UpdatedAt = DateTime.UtcNow,
+            UserId = 2,
         }, new Note
         {
             Id = 7,
@@ -63,7 +69,8 @@ public class NoteSeedingConfiguration : IEntityTypeConfiguration<Note>
             Content = "This is the content of the seventh note.",
             IsArchived = false,
             CreatedAt = DateTime.UtcNow,
-            UpdatedAt = DateTime.UtcNow
+            UpdatedAt = DateTime.UtcNow,
+            UserId = 2,
         }, new Note
         {
             Id = 8,
@@ -71,7 +78,8 @@ public class NoteSeedingConfiguration : IEntityTypeConfiguration<Note>
             Content = "This is the content of the eighth note.",
             IsArchived = true,
             CreatedAt = DateTime.UtcNow,
-            UpdatedAt = DateTime.UtcNow
+            UpdatedAt = DateTime.UtcNow,
+            UserId = 2,
         }, new Note
         {
             Id = 9,
@@ -79,7 +87,8 @@ public class NoteSeedingConfiguration : IEntityTypeConfiguration<Note>
             Content = "This is the content of the ninth note.",
             IsArchived = false,
             CreatedAt = DateTime.UtcNow,
-            UpdatedAt = DateTime.UtcNow
+            UpdatedAt = DateTime.UtcNow,
+            UserId = 2,
         }, new Note
         {
             Id = 10,
@@ -87,7 +96,8 @@ public class NoteSeedingConfiguration : IEntityTypeConfiguration<Note>
             Content = "This is the content of the tenth note.",
             IsArchived = true,
             CreatedAt = DateTime.UtcNow,
-            UpdatedAt = DateTime.UtcNow
+            UpdatedAt = DateTime.UtcNow,
+            UserId = 2,
         }, new Note
         {
             Id = 11,
@@ -95,7 +105,8 @@ public class NoteSeedingConfiguration : IEntityTypeConfiguration<Note>
             Content = "This is the content of the eleventh note.",
             IsArchived = false,
             CreatedAt = DateTime.UtcNow,
-            UpdatedAt = DateTime.UtcNow
+            UpdatedAt = DateTime.UtcNow,
+            UserId = 2,
         }, new Note
         {
             Id = 12,
@@ -103,7 +114,8 @@ public class NoteSeedingConfiguration : IEntityTypeConfiguration<Note>
             Content = "This is the content of the twelfth note.",
             IsArchived = true,
             CreatedAt = DateTime.UtcNow,
-            UpdatedAt = DateTime.UtcNow
+            UpdatedAt = DateTime.UtcNow,
+            UserId = 2,
         }, new Note
         {
             Id = 13,
@@ -111,7 +123,8 @@ public class NoteSeedingConfiguration : IEntityTypeConfiguration<Note>
             Content = "This is the content of the thirteenth note.",
             IsArchived = false,
             CreatedAt = DateTime.UtcNow,
-            UpdatedAt = DateTime.UtcNow
+            UpdatedAt = DateTime.UtcNow,
+            UserId = 2,
         }, new Note
         {
             Id = 14,
@@ -119,7 +132,8 @@ public class NoteSeedingConfiguration : IEntityTypeConfiguration<Note>
             Content = "This is the content of the fourteenth note.",
             IsArchived = true,
             CreatedAt = DateTime.UtcNow,
-            UpdatedAt = DateTime.UtcNow
+            UpdatedAt = DateTime.UtcNow,
+            UserId = 2,
         }, new Note
         {
             Id = 15,
@@ -127,7 +141,8 @@ public class NoteSeedingConfiguration : IEntityTypeConfiguration<Note>
             Content = "This is the content of the fifteenth note.",
             IsArchived = false,
             CreatedAt = DateTime.UtcNow,
-            UpdatedAt = DateTime.UtcNow
+            UpdatedAt = DateTime.UtcNow,
+            UserId = 2,
         });
     }
 }
