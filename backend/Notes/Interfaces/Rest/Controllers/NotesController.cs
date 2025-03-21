@@ -15,6 +15,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace Notix.Beta.API.Notes.Interfaces.Rest.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/v0/[controller]")]
 [Produces(MediaTypeNames.Application.Json)]
@@ -35,8 +36,7 @@ public class NotesController : ControllerBase
     {
         return _mapper.Map<IEnumerable<BasicNoteResource>>(await _noteService.ListAllAsync());
     }
-
-    [Authorize]
+    
     [HttpGet("list/{userId:int}")]
     public async Task<IEnumerable<BasicNoteResource>> ListNotesByUserIdAsync(int userId)
     {
@@ -46,7 +46,17 @@ public class NotesController : ControllerBase
         Console.WriteLine($"claimUserId: {claimUserId}");
         return _mapper.Map<IEnumerable<BasicNoteResource>>(await _noteService.ListByUserIdAsync(userId));
     }
-
+    
+    [HttpGet("status/{userId:int}")]
+    public async Task<IEnumerable<BasicNoteResource>> ListNotesByUserIdAndIsActiveStatusAsync(
+        [FromQuery(Name = "is_archive")] bool isArchive, int userId)
+    {
+        var claimUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if(string.IsNullOrEmpty(claimUserId) || claimUserId != userId.ToString())
+            throw new UnauthorizedAccessException("You are not authorized to access this resource.");
+        return _mapper.Map<IEnumerable<BasicNoteResource>>(await _noteService.ListNotesByUserIdAndIsActiveStatusAsync(isArchive, userId));
+    }
+        
     [HttpGet("status")]
     public async Task<IEnumerable<BasicNoteResource>> ListNotesByIsActiveStatusAsync(
         [FromQuery(Name = "is_archive")] bool isArchive)
@@ -62,7 +72,7 @@ public class NotesController : ControllerBase
             return BadRequest(result.Message);
         return Ok(_mapper.Map<DetailedNoteResource>(result.Resource));
     }
-
+    
     [HttpPost]
     public async Task<IActionResult> CreateNoteAsync([FromBody] CreateNoteResource resource)
     {
@@ -107,5 +117,16 @@ public class NotesController : ControllerBase
     {
         return _mapper.Map<IEnumerable<BasicNoteResource>>(
             await _noteService.ListByCategoryAndIsArchivedAsync(categoryId, isArchived));
+    }
+    
+    [HttpGet("{userId:int}/category/{categoryId:int}")]
+    public async Task<IEnumerable<BasicNoteResource>> ListByCategoryIdAndUserIdAsync([FromRoute] int categoryId,
+        [FromQuery(Name = "is_archived")] bool isArchived, int userId)
+    {
+        var claimUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if(string.IsNullOrEmpty(claimUserId) || claimUserId != userId.ToString())
+            throw new UnauthorizedAccessException("You are not authorized to access this resource.");
+        return _mapper.Map<IEnumerable<BasicNoteResource>>(
+            await _noteService.ListByCategoryAndIsArchivedAndUserIdAsync(categoryId, isArchived, userId));
     }
 }

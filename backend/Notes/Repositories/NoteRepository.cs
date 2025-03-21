@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Notix.Beta.API.Notes.Domain.Models;
+using Notix.Beta.API.Notes.Domain.Models.Intermediate;
 using Notix.Beta.API.Notes.Domain.Repositories;
 using Notix.Beta.API.Shared.Persistence.Context;
 using Notix.Beta.API.Shared.Persistence.Repositories;
@@ -39,6 +40,25 @@ public class NoteRepository : BaseRepository<Note, int>, INoteRepository
                            note.IsArchived == isArchived)
             .ToListAsync();
     }
+
+    public async Task<IEnumerable<Note>> ListNotesByUserIdAndIsActiveStatusAsync(bool isArchived, int userId)
+    {
+        return await DbSet
+            .Include(note => note.NoteCategories)
+            .Where(note => note.UserId == userId && note.IsArchived == isArchived)
+            .ToListAsync();
+    }
+
+    public async Task<IEnumerable<Note>> ListByCategoryAndIsArchivedAndUserIdAsync(int categoryId, bool isArchived,
+        int userId)
+    {
+        return await DbSet
+            .Include(note => note.NoteCategories)
+            .Where(note => note.UserId == userId && note.IsArchived == isArchived &&
+                           note.NoteCategories.Any(noteCategory => noteCategory.CategoryId == categoryId))
+            .ToListAsync();
+    }
+
 
     public override async Task<Note?> FindAsync(int id)
     {

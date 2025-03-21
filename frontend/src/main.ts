@@ -13,7 +13,7 @@ import Lara from '@primeuix/themes/lara'
 import PrimeVue from 'primevue/config'
 
 // Primevue Components
-import { Button, Fieldset, FloatLabel, MultiSelect, Select, Textarea, ToggleButton } from 'primevue'
+import { Button, Fieldset, FloatLabel, MultiSelect, Password, Select, Textarea, ToggleButton } from 'primevue'
 import Tabs from 'primevue/tabs'
 import TabList from 'primevue/tablist'
 import Tab from 'primevue/tab'
@@ -54,6 +54,7 @@ app.component('pv-form', Form)
 app.component('pv-toggle-button', ToggleButton)
 app.component('pv-confirm-popup', ConfirmPopup)
 app.component("pv-select", Select)
+app.component("pv-input-password", Password)
 
 // Enable Ripple and use Primevue
 

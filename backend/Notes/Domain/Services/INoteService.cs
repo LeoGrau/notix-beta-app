@@ -14,4 +14,6 @@ public interface INoteService
     Task<NoteResponse> SetIsArchiveStatusAsync(int id, bool isArchive);
     Task<NoteResponse> DeleteAsync(int id);
     Task<IEnumerable<Note>> ListByUserIdAsync(int userId);
+    Task<IEnumerable<Note>> ListNotesByUserIdAndIsActiveStatusAsync(bool isArchived, int userId);
+    Task<IEnumerable<Note>> ListByCategoryAndIsArchivedAndUserIdAsync(int categoryId, bool isArchived, int userId);
 }

@@ -11,10 +11,18 @@
   font-family: 'Tektur', sans-serif;
 }
 
+.montserrat-font {
+  font-family: "Montserrat", 'Courier New', Courier, monospace;
+}
+
 
 html, #app, body {
   height: 100%;
   min-width: 400px;
+}
+
+input[type='password'] {
+  width: 100% !important;
 }
 
 

@@ -37,6 +37,10 @@ class NoteService {
   getNotesByCategoryId(categoryId: number, isArchived: boolean) {
     return http.get(`${this.path}/category/${categoryId}?is_archived=${isArchived}`)
   }
+
+  getNotesByUserAndStatus(isArchive: boolean, userId: number) {
+    return http.get(`${this.path}/status/${userId}?is_archive=${isArchive}`)
+  }
 }
 
 export default new NoteService()

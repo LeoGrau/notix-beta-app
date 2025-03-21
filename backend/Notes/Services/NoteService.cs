@@ -155,4 +155,14 @@ public class NoteService : INoteService
     {
         return await _noteRepository.ListByUserIdAsync(userId);
     }
+
+    public async Task<IEnumerable<Note>> ListNotesByUserIdAndIsActiveStatusAsync(bool isArchived, int userId)
+    {
+        return await _noteRepository.ListNotesByUserIdAndIsActiveStatusAsync(isArchived, userId);
+    }
+
+    public async Task<IEnumerable<Note>> ListByCategoryAndIsArchivedAndUserIdAsync(int categoryId, bool isArchived, int userId)
+    {
+        return await _noteRepository.ListByCategoryAndIsArchivedAndUserIdAsync(categoryId, isArchived, userId);
+    }
 }

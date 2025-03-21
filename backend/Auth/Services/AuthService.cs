@@ -31,7 +31,7 @@ public class AuthService : IAuthService
         var existingUser = await _userRepository.FindUserByUsernameAsync(email);
         if (existingUser is null || (existingUser.Email == email &&
                                      existingUser.HashedPassword == BCrypt.Net.BCrypt.HashPassword(password)))
-            return new LoginResponse("Email or password is incorrect");
+            return new LoginResponse("Email or password are incorrect");
         var token = _jwtService.GenerateToken(existingUser);
         
         var tokenExpiration = int.Parse(_configuration["JwtSettings:TokenExpiration"]!) * 3600;

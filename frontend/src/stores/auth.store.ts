@@ -1,6 +1,6 @@
 import authService from '@/services/api/auth.service'
 import type AuthModel from '@/types/models/auth/auth.model'
-import axios from 'axios'
+import axios, { type AxiosResponse } from 'axios'
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 
@@ -9,7 +9,7 @@ export const useAuthStore = defineStore('auth', () => {
   const userId = ref(JSON.parse(localStorage.getItem('userId')! ?? 'null') || null)
   const isAuthenticated = computed(() => !!token.value)
 
-  function login(request: AuthModel) {
+  function login(request: AuthModel) : Promise<AxiosResponse<any>> {
     return authService
       .login(request)
       .then((res) => {
@@ -20,7 +20,7 @@ export const useAuthStore = defineStore('auth', () => {
         localStorage.setItem('token', token.value!)
         localStorage.setItem('userId', userId.value)
 
-        return res.data
+        return res
       })
       .catch((error) => {
         console.error('❌ Error en login:', error.response?.data || error.message)
@@ -28,11 +28,14 @@ export const useAuthStore = defineStore('auth', () => {
       })
   }
 
-  function logout() {
+  function logout() : void {
     token.value = null
     userId.value = null
     localStorage.removeItem('token')
     localStorage.removeItem('userId')
     delete axios.defaults.headers.common['Authorization'];
   }
+
+  return { login, logout, token, userId, isAuthenticated }
+
 })

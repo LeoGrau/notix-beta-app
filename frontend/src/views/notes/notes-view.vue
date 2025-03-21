@@ -81,6 +81,7 @@ import { onMounted, ref } from 'vue'
 import CreateNoteDialog from './dialog/create-note-dialog.vue'
 import type CreateNoteModel from '@/types/models/note/create.note.model'
 import categoryService from '@/services/api/category.service'
+import { useAuthStore } from '@/stores/auth.store'
 
 const archivedNotes = ref([])
 const activeNotes = ref([])
@@ -89,6 +90,8 @@ const dialog = useDialog()
 const categories = ref([])
 
 const selectedCategory = ref({} as any)
+const authStore = useAuthStore()
+const userId = ref(authStore.userId);
 
 function openCreateNoteDialog() {
   dialog.open(CreateNoteDialog, {
@@ -124,11 +127,11 @@ function openCreateNoteDialog() {
 }
 
 function getArchivedNotes() {
-  return noteService.getNotesByIsArchiveStatus(true).then((res) => (archivedNotes.value = res.data))
+  return noteService.getNotesByUserAndStatus(true, userId.value).then((res) => (archivedNotes.value = res.data)).then((res) => console.log(res))
 }
 
 function getActiveNotes() {
-  return noteService.getNotesByIsArchiveStatus(false).then((res) => (activeNotes.value = res.data))
+  return noteService.getNotesByUserAndStatus(false, userId.value).then((res) => (activeNotes.value = res.data)).then((res) => console.log(res))
 }
 
 function getCategories() {

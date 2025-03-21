@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Notix.Beta.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a44320b47b758e560546e9b9da707be781b86166")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+aa158ce67234f3c910ee6be128433a9aeb3cccc2")]
 [assembly: System.Reflection.AssemblyProductAttribute("Notix.Beta.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Notix.Beta.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
