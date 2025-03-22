@@ -20,6 +20,7 @@
               <component
                 v-model="initialValues[field.fieldName as keyof typeof initialValues]"
                 :is="field.inputType"
+                v-bind="field.bind"
                 class="w-full"
                 name=""
               ></component>
@@ -64,11 +65,15 @@ const inputFields = ref([
     fieldName: 'email',
     fieldLabel: 'Email',
     inputType: 'pv-input-text',
+    bind: {}
   },
   {
     fieldName: 'password',
     fieldLabel: 'Password',
     inputType: 'pv-input-password',
+    bind: {
+      feedback: false
+    }
   },
 ])
 
