@@ -13,7 +13,7 @@ export function authGuard(
   const authStore = useAuthStore()
   // If is not authenticated and the page requires it so...
   if (to.meta.requiresAuth && !authStore.isAuthenticated) next({ name: 'login-view' })
-  else if (to.name == 'login-view' && authStore.isAuthenticated) {
+  else if ((to.name == 'login-view' || to.name == 'register-view') && authStore.isAuthenticated) {
     next({ name: 'home-view' })
   } else {
     next()

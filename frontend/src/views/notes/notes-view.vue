@@ -111,7 +111,9 @@ function openCreateNoteDialog() {
     },
     onClose(options) {
       if (options?.data) {
+        console.log(userId.value)
         const newNote: CreateNoteModel = {
+          userId: userId.value,
           content: options.data.content,
           isArchived: options.data.isArchived,
           title: options.data.title,

@@ -36,9 +36,13 @@ import { useConfirm, useDialog, useToast } from 'primevue'
 import EditNoteDialog from './dialog/edit-note-dialog.vue'
 import noteService from '@/services/api/note.service'
 import type UpdateNoteModel from '@/types/models/note/update.note.model'
+import { useAuthStore } from '@/stores/auth.store'
+import { ref } from 'vue'
 
 const dialog = useDialog()
 const confirm = useConfirm()
+const authStore = useAuthStore()
+const userId = ref(authStore.userId)
 
 interface NotixNoteProps {
   note: Note
@@ -75,6 +79,7 @@ function openEditNoteDialog(noteData: Note) {
         // To Submit
         console.log('Submit', options.data)
         const toSubmitNote: UpdateNoteModel = {
+          userId: userId.value,
           content: options.data.content,
           isArchived: options.data.isArchived,
           noteCategoriesId: options.data.noteCategories.map((nc: { id: number }) => nc.id),
