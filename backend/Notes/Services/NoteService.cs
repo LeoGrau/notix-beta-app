@@ -52,10 +52,10 @@ public class NoteService : INoteService
         {
             await _unitOfWork.BeginTransactionAsync();
             await _noteRepository.AddAsync(newNote);
-
+            
             var categoryIds = newNote.NoteCategories.Select(c => c.CategoryId);
             var categoryDictionary = await _categoryRepository.ListByMutipleIdAsync(categoryIds);
-
+            
             foreach (var noteCategory in newNote.NoteCategories)
             {
                 if (categoryDictionary.TryGetValue(noteCategory.CategoryId, out var category))
@@ -63,7 +63,7 @@ public class NoteService : INoteService
                     noteCategory.Category = category;
                 }
             }
-
+            
             await _unitOfWork.CommitTransactionAsync();
             return new NoteResponse(newNote);
         }

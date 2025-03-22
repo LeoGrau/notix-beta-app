@@ -26,6 +26,15 @@ public class UserSeedingConfiguration : IEntityTypeConfiguration<User>
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow,
             HashedPassword = BCrypt.Net.BCrypt.HashPassword("admin234")
+        }, new User
+        {
+            Id = 3,
+            Email = "leonardo.grau@outlook.com.pe",
+            FirstName = "Leonardo Manuel",
+            LastName = "Grau Vargas",
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow,
+            HashedPassword = BCrypt.Net.BCrypt.HashPassword("1234")
         });
     }
 }

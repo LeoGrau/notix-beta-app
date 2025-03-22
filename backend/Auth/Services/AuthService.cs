@@ -17,7 +17,8 @@ public class AuthService : IAuthService
     private readonly IUnitOfWork _unitOfWork;
     private readonly IConfiguration _configuration;
 
-    public AuthService(IUserRepository userRepository, IUnitOfWork unitOfWork, IMapper mapper, IJwtService jwtService, IConfiguration configuration)
+    public AuthService(IUserRepository userRepository, IUnitOfWork unitOfWork, IMapper mapper, IJwtService jwtService,
+        IConfiguration configuration)
     {
         _userRepository = userRepository;
         _unitOfWork = unitOfWork;
@@ -29,13 +30,14 @@ public class AuthService : IAuthService
     public async Task<LoginResponse> LoginAsync(string email, string password)
     {
         var existingUser = await _userRepository.FindUserByUsernameAsync(email);
-        if (existingUser is null || (existingUser.Email == email &&
-                                     existingUser.HashedPassword == BCrypt.Net.BCrypt.HashPassword(password)))
+        if (existingUser is null || !(existingUser.Email == email &&
+                                     BCrypt.Net.BCrypt.Verify(password, existingUser.HashedPassword)))
             return new LoginResponse("Email or password are incorrect");
+
         var token = _jwtService.GenerateToken(existingUser);
         
         var tokenExpiration = int.Parse(_configuration["JwtSettings:TokenExpiration"]!) * 3600;
-        
+
         return new LoginResponse(existingUser.Id, token, tokenExpiration);
     }
 
@@ -45,6 +47,13 @@ public class AuthService : IAuthService
         try
         {
             await _unitOfWork.BeginTransactionAsync();
+            // Confirm password.
+            if (request.Password != request.ConfirmPassword)
+                return new RegisterResponse("Passwords do not match");
+            
+            // Hash Password.
+            newUser.HashedPassword = BCrypt.Net.BCrypt.HashPassword(request.Password);
+            
             await _userRepository.AddAsync(newUser);
             await _unitOfWork.CommitTransactionAsync();
             return new RegisterResponse(newUser.Id);

@@ -76,7 +76,12 @@ public class NotesController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateNoteAsync([FromBody] CreateNoteResource resource)
     {
+        var claimUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if(string.IsNullOrEmpty(claimUserId) || claimUserId != resource.UserId.ToString())
+            throw new UnauthorizedAccessException("You are not authorized to access this resource.");
+        
         var mappedResource = _mapper.Map<CreateNoteResource, Note>(resource);
+        mappedResource.UserId = int.Parse(claimUserId!);
         var result = await _noteService.CreateAsync(mappedResource);
         if (!result.Success)
             return BadRequest(result.Message);
@@ -86,6 +91,9 @@ public class NotesController : ControllerBase
     [HttpPut("{id:int}")]
     public async Task<IActionResult> UpdateNoteAsync([FromRoute] int id, [FromBody] UpdateNoteResource resource)
     {
+        var claimUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if(string.IsNullOrEmpty(claimUserId) || claimUserId != resource.UserId.ToString())
+            throw new UnauthorizedAccessException("You are not authorized to access this resource.");
         var mappedResource = _mapper.Map<UpdateNoteResource, Note>(resource);
         var result = await _noteService.UpdateAsync(id, mappedResource);
         if (!result.Success)

@@ -1,11 +1,11 @@
 using AutoMapper;
-using Microsoft.AspNetCore.Identity.Data;
 using Notix.Beta.API.Auth.Domain.Models;
 using Notix.Beta.API.Notes.Domain.Models;
 using Notix.Beta.API.Notes.Domain.Models.Intermediate;
 using Notix.Beta.API.Notes.Resources.Create;
 using Notix.Beta.API.Notes.Resources.Update;
 using Notix.Beta.API.Notes.Resources.Update.Patch;
+using RegisterRequest = Notix.Beta.API.Auth.Resources.Auth.RegisterRequest;
 
 namespace Notix.Beta.API.Mapping;
 
